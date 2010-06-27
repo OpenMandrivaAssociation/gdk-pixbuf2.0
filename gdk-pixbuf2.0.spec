@@ -28,7 +28,7 @@
 
 Summary:	Image loading and manipulation library for GTK+
 Name:		%{pkgname}%{api_version}
-Version:	2.21.3
+Version:	2.21.4
 Release:        %mkrel 1
 License:	LGPLv2+
 Group:		System/Libraries
@@ -120,7 +120,7 @@ rm -rf $RPM_BUILD_ROOT %pkgname.lang
 touch $RPM_BUILD_ROOT%_libdir/%pkgname-%{api_version}/%{binary_version}.0/loaders.cache
 
 # handle biarch packages
-progs="gdk-pixbuf-query-loaders-2.0"
+progs="gdk-pixbuf-query-loaders"
 mkdir -p $RPM_BUILD_ROOT%{_libdir}/%pkgname-%{api_version}/bin
 for f in $progs; do
   mv -f $RPM_BUILD_ROOT%{_bindir}/$f $RPM_BUILD_ROOT%{_libdir}/%pkgname-%{api_version}/bin/
@@ -151,14 +151,14 @@ if [ "$1" = "2" ]; then
   fi
 fi
 
-%{_libdir}/%pkgname-%{api_version}/bin/gdk-pixbuf-query-loaders-2.0 --update-cache
+%{_libdir}/%pkgname-%{api_version}/bin/gdk-pixbuf-query-loaders --update-cache
 
 
 %files -f %pkgname.lang
 %defattr(-, root, root)
 %doc README
-%{_bindir}/gdk-pixbuf-query-loaders-2.0
-%_mandir/man1/gdk-pixbuf-query-loaders-%{api_version}.1*
+%{_bindir}/gdk-pixbuf-query-loaders
+%_mandir/man1/gdk-pixbuf-query-loaders.1*
 
 %files -n %{libname}
 %defattr(-, root, root)
@@ -166,16 +166,16 @@ fi
 %_libdir/girepository-1.0/GdkPixbuf-2.0.typelib
 %dir %{_libdir}/%pkgname-%{api_version}/%{binary_version}.*/loaders
 %{_libdir}/%pkgname-%{api_version}/%{binary_version}.*/loaders/*.so
-%{_libdir}/%pkgname-%{api_version}/bin/gdk-pixbuf-query-loaders-2.0
+%{_libdir}/%pkgname-%{api_version}/bin/gdk-pixbuf-query-loaders
 %ghost %verify (not md5 mtime size) %{_libdir}/%pkgname-%{api_version}/%{binary_version}.*/loaders.cache
 
 %files -n %{develname}
 %defattr(-, root, root)
 %doc %{_datadir}/gtk-doc/html/gdk-pixbuf
-%_bindir/gdk-pixbuf-csource-%api_version
+%_bindir/gdk-pixbuf-csource
 %{_includedir}/%pkgname-%api_version
 %_datadir/gir-1.0/GdkPixbuf-2.0.gir
 %{_libdir}/libgdk_pixbuf*.so
 %attr(644,root,root) %{_libdir}/libgdk_pixbuf*.la
 %{_libdir}/pkgconfig/gdk-pixbuf*.pc
-%_mandir/man1/gdk-pixbuf-csource-%{api_version}.1*
+%_mandir/man1/gdk-pixbuf-csource.1*
