@@ -29,10 +29,11 @@
 Summary:	Image loading and manipulation library for GTK+
 Name:		%{pkgname}%{api_version}
 Version:	2.21.6
-Release:        %mkrel 1
+Release:        %mkrel 2
 License:	LGPLv2+
 Group:		System/Libraries
 Source0:	http://ftp.gnome.org/pub/GNOME/sources/%pkgname/%{pkgname}-%{version}.tar.bz2
+Patch0:		0001-Fix-linking-when-libpng-loader-is-builtin.patch
 BuildRoot:	%{_tmppath}/%{name}-%{version}-buildroot
 
 URL:		http://www.gtk.org
@@ -89,8 +90,10 @@ that uses GTK+ image loading/manipulation library.
 
 %prep
 %setup -n %{pkgname}-%{version} -q
+%patch0 -p1
 
 %build
+autoreconf -fi
 %ifarch ppc64
 export CFLAGS="$RPM_OPT_FLAGS -mminimal-toc"
 %endif
@@ -100,8 +103,7 @@ export CFLAGS=`echo $RPM_OPT_FLAGS | sed -e 's/-fomit-frame-pointer//g'`
 
 #CONFIGURE_TOP=.. 
 export CPPFLAGS="-DGTK_COMPILATION"
-%define _disable_ld_no_undefined 1
-%configure2_5x \
+%configure2_5x --with-included-loaders=png \
 %if !%enable_gtkdoc
 	--enable-gtk-doc=no
 %endif
@@ -115,7 +117,7 @@ xvfb-run make check
 
 %install
 rm -rf $RPM_BUILD_ROOT %pkgname.lang
-%makeinstall_std mandir=%{_mandir} RUN_QUERY_IMMODULES_TEST=false RUN_QUERY_LOADER_TEST=false
+%makeinstall_std RUN_QUERY_LOADER_TEST=false
 
 touch $RPM_BUILD_ROOT%_libdir/%pkgname-%{api_version}/%{binary_version}.0/loaders.cache
 
