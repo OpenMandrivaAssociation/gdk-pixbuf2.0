@@ -42,7 +42,7 @@ BuildRequires:  libglib2.0-devel >= %{req_glib_version}
 BuildRequires:	libjpeg-devel
 BuildRequires:	libpng-devel
 BuildRequires:	libtiff-devel
-BuildRequires:  gobject-introspection-devel
+BuildRequires:  gobject-introspection-devel >= 0.90.0
 BuildRequires:  jasper-devel
 %if %enable_tests
 BuildRequires:  x11-server-xvfb
