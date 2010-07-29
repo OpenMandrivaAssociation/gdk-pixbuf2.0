@@ -103,7 +103,7 @@ export CFLAGS=`echo $RPM_OPT_FLAGS | sed -e 's/-fomit-frame-pointer//g'`
 
 #CONFIGURE_TOP=.. 
 export CPPFLAGS="-DGTK_COMPILATION"
-%configure2_5x --with-included-loaders=png \
+%configure2_5x --with-included-loaders=png --with-libjasper \
 %if !%enable_gtkdoc
 	--enable-gtk-doc=no
 %endif
