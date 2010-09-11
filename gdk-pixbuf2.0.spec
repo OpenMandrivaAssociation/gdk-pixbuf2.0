@@ -162,8 +162,9 @@ fi
 
 %files -n %{libname}
 %defattr(-, root, root)
-%{_libdir}/libgdk_pixbuf*.so.*
-%_libdir/girepository-1.0/GdkPixbuf-2.0.typelib
+%{_libdir}/libgdk_pixbuf-%{api_version}.so.%{major}*
+%{_libdir}/libgdk_pixbuf-xlib-%{api_version}.so.%{major}*
+%_libdir/girepository-1.0/GdkPixbuf-%{api_version}.typelib
 %dir %{_libdir}/%pkgname-%{api_version}/%{binary_version}.*/loaders
 %{_libdir}/%pkgname-%{api_version}/%{binary_version}.*/loaders/*.so
 %{_libdir}/%pkgname-%{api_version}/bin/gdk-pixbuf-query-loaders
@@ -174,7 +175,7 @@ fi
 %doc %{_datadir}/gtk-doc/html/gdk-pixbuf
 %_bindir/gdk-pixbuf-csource
 %{_includedir}/%pkgname-%api_version
-%_datadir/gir-1.0/GdkPixbuf-2.0.gir
+%_datadir/gir-1.0/GdkPixbuf-%{api_version}.gir
 %{_libdir}/libgdk_pixbuf*.so
 %attr(644,root,root) %{_libdir}/libgdk_pixbuf*.la
 %{_libdir}/pkgconfig/gdk-pixbuf*.pc
