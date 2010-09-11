@@ -28,12 +28,11 @@
 
 Summary:	Image loading and manipulation library for GTK+
 Name:		%{pkgname}%{api_version}
-Version:	2.21.6
-Release:        %mkrel 2
+Version:	2.21.7
+Release:        %mkrel 1
 License:	LGPLv2+
 Group:		System/Libraries
 Source0:	http://ftp.gnome.org/pub/GNOME/sources/%pkgname/%{pkgname}-%{version}.tar.bz2
-Patch0:		0001-Fix-linking-when-libpng-loader-is-builtin.patch
 BuildRoot:	%{_tmppath}/%{name}-%{version}-buildroot
 
 URL:		http://www.gtk.org
@@ -43,7 +42,7 @@ BuildRequires:  libglib2.0-devel >= %{req_glib_version}
 BuildRequires:	libjpeg-devel
 BuildRequires:	libpng-devel
 BuildRequires:	libtiff-devel
-BuildRequires:  gobject-introspection-devel >= 0.9.0
+BuildRequires:  gobject-introspection-devel >= 0.9.5
 BuildRequires:  jasper-devel
 %if %enable_tests
 BuildRequires:  x11-server-xvfb
@@ -90,10 +89,8 @@ that uses GTK+ image loading/manipulation library.
 
 %prep
 %setup -n %{pkgname}-%{version} -q
-%patch0 -p1
 
 %build
-autoreconf -fi
 %ifarch ppc64
 export CFLAGS="$RPM_OPT_FLAGS -mminimal-toc"
 %endif
