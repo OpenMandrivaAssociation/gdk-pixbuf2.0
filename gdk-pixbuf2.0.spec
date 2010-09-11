@@ -29,7 +29,7 @@
 Summary:	Image loading and manipulation library for GTK+
 Name:		%{pkgname}%{api_version}
 Version:	2.21.7
-Release:        %mkrel 1
+Release:        %mkrel 2
 License:	LGPLv2+
 Group:		System/Libraries
 Source0:	http://ftp.gnome.org/pub/GNOME/sources/%pkgname/%{pkgname}-%{version}.tar.bz2
@@ -42,6 +42,7 @@ BuildRequires:  libglib2.0-devel >= %{req_glib_version}
 BuildRequires:	libjpeg-devel
 BuildRequires:	libpng-devel
 BuildRequires:	libtiff-devel
+BuildRequires:  libx11-devel
 BuildRequires:  gobject-introspection-devel >= 0.9.5
 BuildRequires:  jasper-devel
 %if %enable_tests
