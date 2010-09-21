@@ -28,8 +28,8 @@
 
 Summary:	Image loading and manipulation library for GTK+
 Name:		%{pkgname}%{api_version}
-Version:	2.21.7
-Release:        %mkrel 2
+Version:	2.22.0
+Release:        %mkrel 1
 License:	LGPLv2+
 Group:		System/Libraries
 Source0:	http://ftp.gnome.org/pub/GNOME/sources/%pkgname/%{pkgname}-%{version}.tar.bz2
@@ -162,8 +162,8 @@ fi
 
 %files -n %{libname}
 %defattr(-, root, root)
-%{_libdir}/libgdk_pixbuf-%{api_version}.so.%{major}*
-%{_libdir}/libgdk_pixbuf-xlib-%{api_version}.so.%{major}*
+%{_libdir}/libgdk_pixbuf-%{api_version}.so.%{lib_major}*
+%{_libdir}/libgdk_pixbuf_xlib-%{api_version}.so.%{lib_major}*
 %_libdir/girepository-1.0/GdkPixbuf-%{api_version}.typelib
 %dir %{_libdir}/%pkgname-%{api_version}/%{binary_version}.*/loaders
 %{_libdir}/%pkgname-%{api_version}/%{binary_version}.*/loaders/*.so
