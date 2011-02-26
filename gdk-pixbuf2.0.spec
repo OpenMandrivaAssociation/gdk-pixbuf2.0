@@ -29,7 +29,7 @@
 Summary:	Image loading and manipulation library for GTK+
 Name:		%{pkgname}%{api_version}
 Version:	2.22.1
-Release:        %mkrel 1
+Release:        %mkrel 2
 License:	LGPLv2+
 Group:		System/Libraries
 Source0:	http://ftp.gnome.org/pub/GNOME/sources/%pkgname/%{pkgname}-%{version}.tar.bz2
@@ -38,7 +38,7 @@ BuildRoot:	%{_tmppath}/%{name}-%{version}-buildroot
 URL:		http://www.gtk.org
 Requires:	common-licenses
 BuildRequires:	gettext-devel
-BuildRequires:  libglib2.0-devel >= %{req_glib_version}
+BuildRequires:  glib2-devel >= %{req_glib_version}
 BuildRequires:	libjpeg-devel
 BuildRequires:	libpng-devel
 BuildRequires:	libtiff-devel
@@ -80,7 +80,7 @@ Summary:	Development files for image handling library for GTK+
 Group:		Development/GNOME and GTK+
 Provides:	libgdk_pixbuf%{api_version}-devel = %{version}-%{release}
 Requires:	%{libname} = %{version}
-Requires:	libglib2.0-devel >= %{req_glib_version}
+Requires:	libglib2-devel >= %{req_glib_version}
 Obsoletes:	%mklibname -d gdk_pixbuf %api_version %lib_major
 
 %description -n %{develname}
