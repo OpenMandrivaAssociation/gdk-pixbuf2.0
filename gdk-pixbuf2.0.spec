@@ -1,66 +1,55 @@
-# enable_gtkdoc: Toggle if gtk-doc files should be rebuilt.
-#      0 = no
-#      1 = yes
-%define enable_gtkdoc 1
-
-# enable_tests: Run test suite in build
-#      0 = no
-#      1 = yes
+%define enable_gtkdoc 0
 %define enable_tests 0
 
-%{?_without_gtkdoc: %{expand: %%define enable_gtkdoc 0}}
-%{?_without_tests: %{expand: %%define enable_tests 0}}
-
-%{?_with_gtkdoc: %{expand: %%define enable_gtkdoc 1}}
-%{?_with_tests: %{expand: %%define enable_tests 1}}
-
-
-# required version of various libraries
-%define req_glib_version		2.25.9
-
+%define oname			gdk_pixbuf
 %define pkgname			gdk-pixbuf
 %define api_version		2.0
-%define binary_version	2.10
+%define binary_version	2.10.0
 %define lib_major		0
+%define girmajor		2.0
 
-%define libname  %mklibname gdk_pixbuf %{api_version} %{lib_major}
-%define develname	%mklibname -d gdk_pixbuf %api_version
+%define libname		%mklibname %{oname} %{api_version} %{lib_major}
+%define xlibname	%mklibname %{oname}_xlib %{api_version} %{lib_major}
+%define develname	%mklibname -d %{oname} %{api_version}
+%define develxlib	%mklibname -d %{oname}_xlib %{api_version}
+%define girname		%mklibname %{oname}-gir %{girmajor}
 
 Summary:	Image loading and manipulation library for GTK+
 Name:		%{pkgname}%{api_version}
 Version:	2.24.0
-Release:        %mkrel 5
+Release:	6
 License:	LGPLv2+
 Group:		System/Libraries
-Source0:	http://ftp.gnome.org/pub/GNOME/sources/%pkgname/%{pkgname}-%{version}.tar.xz
-BuildRoot:	%{_tmppath}/%{name}-%{version}-buildroot
-
 URL:		http://www.gtk.org
-Requires:	common-licenses
+Source0:	http://ftp.gnome.org/pub/GNOME/sources/%{pkgname}/%{pkgname}-%{version}.tar.xz
+
 BuildRequires:	gettext-devel
-BuildRequires:  glib2-devel >= %{req_glib_version}
-BuildRequires:	libjpeg-devel
-%if %mdkver >= 201200
-BuildRequires:	libpng-devel >= 1.5
-%else
-BuildRequires:	libpng-devel < 1.5
-%endif
-BuildRequires:	libtiff-devel
-BuildRequires:  libx11-devel
-BuildRequires:  gobject-introspection-devel >= 0.9.5
 BuildRequires:  jasper-devel
+BuildRequires:	jpeg-devel
+BuildRequires:	tiff-devel
+BuildRequires:  pkgconfig(gio-2.0) >= 2.25.9
+BuildRequires:  pkgconfig(glib-2.0) >= 2.25.9
+BuildRequires:  pkgconfig(gmodule-2.0) >= 2.25.9
+BuildRequires:  pkgconfig(gobject-2.0) >= 2.25.9
+BuildRequires:  pkgconfig(gobject-introspection-1.0) >= 0.9.5
+BuildRequires:  pkgconfig(x11)
+%if %mdkver >= 201200
+BuildRequires:	pkgconfig(libpng15)
+%else
+BuildRequires:	pkgconfig(libpng12)
+%endif
 %if %enable_tests
 BuildRequires:  x11-server-xvfb
+# gw tests will fail without this
+BuildRequires:	fonts-ttf-dejavu
 %endif
 %if %enable_gtkdoc
-BuildRequires: gtk-doc >= 0.9 
-BuildRequires: sgml-tools
-BuildRequires: texinfo
+BuildRequires:	gtk-doc >= 0.9 
+BuildRequires:	sgml-tools
+BuildRequires:	texinfo
 %endif
-# gw tests will fail without this
-BuildRequires: fonts-ttf-dejavu
-Requires: %{libname} = %{version}
-Conflicts: gtk+2.0 < 2.21.3
+Requires:	common-licenses
+Conflicts:	gtk+2.0 < 2.21.3
 
 %description
 This package contains libraries used by GTK+ to load and handle
@@ -69,123 +58,144 @@ various image formats.
 %package -n %{libname}
 Summary:	Image loading and manipulation library for GTK+
 Group:		System/Libraries
-Provides:	libgdk_pixbuf%{api_version} = %{version}-%{release}
-Requires(post):		libtiff >= 3.6.1
-Conflicts: gir-repository < 0.6.5-4
-Requires(post): %name >= %version
-Requires: %name >= %version
+Provides:	lib%{oname}%{api_version} = %{version}-%{release}
 
 %description -n %{libname}
 This package contains libraries used by GTK+ to load and handle
 various image formats.
 
+%package -n %{xlibname}
+Summary:	Image loading and manipulation library for GTK+
+Group:		System/Libraries
+
+%description -n %{xlibname}
+This package contains libraries used by GTK+ to load and handle
+various image formats.
+
+%package -n %{girname}
+Summary:    GObject Introspection interface description for %{name}
+Group:      System/Libraries
+Requires:   %{libname} = %{version}-%{release}
+Conflicts:	gir-repository < 0.6.5-4
+
+%description -n %{girname}
+GObject Introspection interface description for %{name}.
+
 %package -n %{develname}
 Summary:	Development files for image handling library for GTK+
 Group:		Development/GNOME and GTK+
-Provides:	libgdk_pixbuf%{api_version}-devel = %{version}-%{release}
-Requires:	%{libname} = %{version}
-Requires:	libglib2-devel >= %{req_glib_version}
-Obsoletes:	%mklibname -d gdk_pixbuf %api_version %lib_major
+Provides:	lib%{oname}%{api_version}-devel = %{version}-%{release}
+Requires:	%{libname} = %{version}-%{release}
+Obsoletes:	%mklibname -d %{oname} %{api_version} %{lib_major}
 
 %description -n %{develname}
 This package contains the development files needed to compile programs
 that uses GTK+ image loading/manipulation library.
 
+%package -n %{develxlib}
+Summary:	Development files for image handling library for GTK+ - Xlib
+Group:		Development/GNOME and GTK+
+Provides:	lib%{oname}_xlib%{api_version}-devel = %{version}-%{release}
+Requires:	%{xlibname} = %{version}-%{release}
+
+%description -n %{develxlib}
+This package contains the development files needed to compile programs
+that uses GTK+ image loading/manipulation Xlib library.
 
 %prep
-%setup -n %{pkgname}-%{version} -q
+%setup -qn %{pkgname}-%{version}
 
 %build
-%ifarch ppc64
-export CFLAGS="$RPM_OPT_FLAGS -mminimal-toc"
-%endif
-
 # fix crash in nautilus (GNOME bug #596977)
 export CFLAGS=`echo $RPM_OPT_FLAGS | sed -e 's/-fomit-frame-pointer//g'`
 
 #CONFIGURE_TOP=.. 
 export CPPFLAGS="-DGTK_COMPILATION"
-%configure2_5x --with-included-loaders=png --with-libjasper \
-%if !%enable_gtkdoc
+%configure2_5x \
+	--with-included-loaders=png \
+	--with-libjasper \
+%if !%{enable_gtkdoc}
 	--enable-gtk-doc=no
 %endif
 
 %make
 
-%check
 %if %enable_tests
+%check
 xvfb-run make check
 %endif
 
 %install
-rm -rf $RPM_BUILD_ROOT %pkgname.lang
+rm -rf %{buildroot} %{pkgname}.lang
 %makeinstall_std RUN_QUERY_LOADER_TEST=false
 
-touch $RPM_BUILD_ROOT%_libdir/%pkgname-%{api_version}/%{binary_version}.0/loaders.cache
+touch %{buildroot}%{_libdir}/%{pkgname}-%{api_version}/%{binary_version}/loaders.cache
 
 # handle biarch packages
 progs="gdk-pixbuf-query-loaders"
-mkdir -p $RPM_BUILD_ROOT%{_libdir}/%pkgname-%{api_version}/bin
+mkdir -p %{buildroot}%{_libdir}/%{pkgname}-%{api_version}/bin
 for f in $progs; do
-  mv -f $RPM_BUILD_ROOT%{_bindir}/$f $RPM_BUILD_ROOT%{_libdir}/%pkgname-%{api_version}/bin/
-  cat > $RPM_BUILD_ROOT%{_bindir}/$f << EOF
+  mv -f %{buildroot}%{_bindir}/$f %{buildroot}%{_libdir}/%{pkgname}-%{api_version}/bin/
+  cat > %{buildroot}%{_bindir}/$f << EOF
 #!/bin/sh
 lib=%{_lib}
 case ":\$1:" in
 :lib*:) lib="\$1"; shift 1;;
 esac
-exec %{_prefix}/\$lib/%pkgname-%{api_version}/bin/$f \${1+"\$@"}
+exec %{_prefix}/\$lib/%{pkgname}-%{api_version}/bin/$f \${1+"\$@"}
 EOF
-  chmod +x $RPM_BUILD_ROOT%{_bindir}/$f
+  chmod +x %{buildroot}%{_bindir}/$f
 done
 
 #remove not packaged files
-rm -f $RPM_BUILD_ROOT%{_libdir}/%pkgname-%{api_version}/*/loaders/*.la
+find %{buildroot} -name *.la | xargs rm
 
-%find_lang %pkgname
+%find_lang %{pkgname}
 
-%clean
-rm -rf $RPM_BUILD_ROOT
-
-%post -n %{libname}
-
+%post
 if [ "$1" = "2" ]; then
-  if [ -f %_libdir/%pkgname-%api_version/2.10.0/loaders.cache ]; then
-    rm -f %_libdir/%pkgname-%api_version/2.10.0/loaders.cache
+  if [ -f %{_libdir}/%{pkgname}-%{api_version}/%{binary_version}/loaders.cache ]; then
+    rm -f %{_libdir}/%{pkgname}-%{api_version}/%{binary_version}/loaders.cache
   fi
 fi
+%{_libdir}/%{pkgname}-%{api_version}/bin/gdk-pixbuf-query-loaders --update-cache
 
-%{_libdir}/%pkgname-%{api_version}/bin/gdk-pixbuf-query-loaders --update-cache
+%triggerin -- %{_libdir}/gdk-pixbuf-%{api_version}/%{binary_version}/loaders/*.so
+%{_libdir}/%{pkgname}-%{api_version}/bin/gdk-pixbuf-query-loaders --update-cache
 
-%triggerin -n %{libname} -- %{_libdir}/gdk-pixbuf-2.0/2.10.0/loaders/*.so
-%{_libdir}/%pkgname-%{api_version}/bin/gdk-pixbuf-query-loaders --update-cache
+%triggerpostun -- %{_libdir}/gdk-pixbuf-%{api_version}/%{binary_version}/loaders/*.so
+if [ -x %_bindir/gdk-pixbuf-query-loaders ]; then
+%{_libdir}/%{pkgname}-%{api_version}/bin/gdk-pixbuf-query-loaders --update-cache
+fi
 
-%triggerpostun -n %{libname} -- %{_libdir}/gdk-pixbuf-2.0/2.10.0/loaders/*.so
-%{_libdir}/%pkgname-%{api_version}/bin/gdk-pixbuf-query-loaders --update-cache
-
-%files -f %pkgname.lang
-%defattr(-, root, root)
+%files -f %{pkgname}.lang
 %doc README
 %{_bindir}/gdk-pixbuf-query-loaders
-%_mandir/man1/gdk-pixbuf-query-loaders.1*
+%dir %{_libdir}/%{pkgname}-%{api_version}/%{binary_version}/loaders
+%{_libdir}/%{pkgname}-%{api_version}/%{binary_version}/loaders/*.so
+%{_libdir}/%{pkgname}-%{api_version}/bin/gdk-pixbuf-query-loaders
+%ghost %verify (not md5 mtime size) %{_libdir}/%{pkgname}-%{api_version}/%{binary_version}/loaders.cache
+%{_mandir}/man1/gdk-pixbuf-query-loaders.1*
 
 %files -n %{libname}
-%defattr(-, root, root)
 %{_libdir}/libgdk_pixbuf-%{api_version}.so.%{lib_major}*
+
+%files -n %{xlibname}
 %{_libdir}/libgdk_pixbuf_xlib-%{api_version}.so.%{lib_major}*
-%_libdir/girepository-1.0/GdkPixbuf-%{api_version}.typelib
-%dir %{_libdir}/%pkgname-%{api_version}/%{binary_version}.*/loaders
-%{_libdir}/%pkgname-%{api_version}/%{binary_version}.*/loaders/*.so
-%{_libdir}/%pkgname-%{api_version}/bin/gdk-pixbuf-query-loaders
-%ghost %verify (not md5 mtime size) %{_libdir}/%pkgname-%{api_version}/%{binary_version}.*/loaders.cache
+
+%files -n %{girname}
+%{_libdir}/girepository-1.0/GdkPixbuf-%{girmajor}.typelib
 
 %files -n %{develname}
-%defattr(-, root, root)
 %doc %{_datadir}/gtk-doc/html/gdk-pixbuf
-%_bindir/gdk-pixbuf-csource
-%{_includedir}/%pkgname-%api_version
-%_datadir/gir-1.0/GdkPixbuf-%{api_version}.gir
-%{_libdir}/libgdk_pixbuf*.so
-%attr(644,root,root) %{_libdir}/libgdk_pixbuf*.la
-%{_libdir}/pkgconfig/gdk-pixbuf*.pc
-%_mandir/man1/gdk-pixbuf-csource.1*
+%{_bindir}/gdk-pixbuf-csource
+%{_includedir}/%{pkgname}-%{api_version}/%{pkgname}/
+%{_libdir}/libgdk_pixbuf_xlib-%{api_version}.so
+%{_libdir}/pkgconfig/gdk-pixbuf-%{api_version}.pc
+%{_datadir}/gir-1.0/GdkPixbuf-%{api_version}.gir
+%{_mandir}/man1/gdk-pixbuf-csource.1*
+
+%files -n %{develxlib}
+%{_libdir}/libgdk_pixbuf-%{api_version}.so
+%{_includedir}/%{pkgname}-%{api_version}/%{pkgname}-xlib/
+%{_libdir}/pkgconfig/gdk-pixbuf-xlib-%{api_version}.pc
