@@ -1,12 +1,12 @@
 %define enable_gtkdoc 0
 %define enable_tests 0
 
-%define oname			gdk_pixbuf
-%define pkgname			gdk-pixbuf
-%define api_version		2.0
+%define oname		gdk_pixbuf
+%define pkgname		gdk-pixbuf
+%define api_version	2.0
 %define binary_version	2.10.0
-%define lib_major		0
-%define girmajor		2.0
+%define lib_major	0
+%define girmajor	2.0
 
 %define libname		%mklibname %{oname} %{api_version} %{lib_major}
 %define xlibname	%mklibname %{oname}_xlib %{api_version} %{lib_major}
@@ -17,7 +17,7 @@
 Summary:	Image loading and manipulation library for GTK+
 Name:		%{pkgname}%{api_version}
 Version:	2.24.0
-Release:	6
+Release:	7
 License:	LGPLv2+
 Group:		System/Libraries
 URL:		http://www.gtk.org
@@ -50,6 +50,7 @@ BuildRequires:	texinfo
 %endif
 Requires:	common-licenses
 Conflicts:	gtk+2.0 < 2.21.3
+Conflicts:	%{libname} < 2.24.0-6
 
 %description
 This package contains libraries used by GTK+ to load and handle
