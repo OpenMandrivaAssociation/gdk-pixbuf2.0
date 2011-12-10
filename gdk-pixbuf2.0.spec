@@ -1,5 +1,6 @@
 %define enable_gtkdoc 0
 %define enable_tests 0
+%define _disable_ld_as_needed	1
 
 %define oname		gdk_pixbuf
 %define pkgname		gdk-pixbuf
@@ -17,7 +18,7 @@
 Summary:	Image loading and manipulation library for GTK+
 Name:		%{pkgname}%{api_version}
 Version:	2.24.0
-Release:	9
+Release:	10
 License:	LGPLv2+
 Group:		System/Libraries
 URL:		http://www.gtk.org
