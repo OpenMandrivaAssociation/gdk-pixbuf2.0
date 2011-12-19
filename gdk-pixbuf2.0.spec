@@ -118,7 +118,7 @@ export CFLAGS=`echo %{optflags} | sed -e 's/-fomit-frame-pointer//g'`
 export CPPFLAGS="-DGTK_COMPILATION"
 %configure \
 	--with-included-loaders=png \
-	--with-libjasper \
+	--with-libjasper --with-x11 \
 %if !%{enable_gtkdoc}
 	--enable-gtk-doc=no
 %endif
