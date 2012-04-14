@@ -194,6 +194,7 @@ fi
 %files -n %{develname}
 %doc %{_datadir}/gtk-doc/html/gdk-pixbuf
 %{_bindir}/gdk-pixbuf-csource
+%{_bindir}/gdk-pixbuf-pixdata
 %{_libdir}/libgdk_pixbuf-%{api_version}.so
 %{_includedir}/%{pkgname}-%{api_version}/%{pkgname}/
 %{_libdir}/pkgconfig/gdk-pixbuf-%{api_version}.pc
