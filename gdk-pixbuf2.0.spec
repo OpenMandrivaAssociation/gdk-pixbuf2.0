@@ -54,7 +54,6 @@ Conflicts:	%{_lib}gdk_pixbuf2.0_0 < 2.24.0-6
 This package contains libraries used by GTK+ to load and handle
 various image formats.
 
-#--------------------------------------------------------------------
 %package -n %{libname}
 Summary:	Image loading and manipulation library for GTK+
 Group:		System/Libraries
@@ -64,7 +63,6 @@ Provides:	lib%{oname}%{api_version} = %{version}-%{release}
 This package contains libraries used by GTK+ to load and handle
 various image formats.
 
-#--------------------------------------------------------------------
 %package -n %{xlibname}
 Summary:	Image loading and manipulation library for GTK+
 Group:		System/Libraries
@@ -73,17 +71,14 @@ Group:		System/Libraries
 This package contains libraries used by GTK+ to load and handle
 various image formats.
 
-#--------------------------------------------------------------------
 %package -n %{girname}
 Summary:	GObject Introspection interface description for %{name}
 Group:		System/Libraries
-Requires:	%{libname} = %{version}-%{release}
 Conflicts:	gir-repository < 0.6.5-4
 
 %description -n %{girname}
 GObject Introspection interface description for %{name}.
 
-#--------------------------------------------------------------------
 %package -n %{develname}
 Summary:	Development files for image handling library for GTK+
 Group:		Development/GNOME and GTK+
@@ -95,7 +90,6 @@ Obsoletes:	%{_lib}gdk_pixbuf2.0_0-devel
 This package contains the development files needed to compile programs
 that uses GTK+ image loading/manipulation library.
 
-#--------------------------------------------------------------------
 %package -n %{develxlib}
 Summary:	Development files for image handling library for GTK+ - Xlib
 Group:		Development/GNOME and GTK+
@@ -106,7 +100,6 @@ Requires:	%{xlibname} = %{version}-%{release}
 This package contains the development files needed to compile programs
 that uses GTK+ image loading/manipulation Xlib library.
 
-#--------------------------------------------------------------------
 %prep
 %setup -qn %{pkgname}-%{version}
 
@@ -205,3 +198,4 @@ fi
 %{_libdir}/libgdk_pixbuf_xlib-%{api_version}.so
 %{_includedir}/%{pkgname}-%{api_version}/%{pkgname}-xlib/
 %{_libdir}/pkgconfig/gdk-pixbuf-xlib-%{api_version}.pc
+
