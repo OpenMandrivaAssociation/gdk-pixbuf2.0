@@ -18,26 +18,22 @@
 Summary:	Image loading and manipulation library for GTK+
 Name:		%{pkgname}%{api_version}
 Version:	2.26.1
-Release:	2
+Release:	3
 License:	LGPLv2+
 Group:		System/Libraries
 URL:		http://www.gtk.org
 Source0:	http://ftp.gnome.org/pub/GNOME/sources/%{pkgname}/%{pkgname}-%{version}.tar.xz
 
 BuildRequires:	gettext-devel
-BuildRequires:  jasper-devel
+BuildRequires:	jasper-devel
 BuildRequires:	jpeg-devel
 BuildRequires:	tiff-devel
-BuildRequires:  pkgconfig(glib-2.0) >= 2.25.9
-BuildRequires:  pkgconfig(gobject-introspection-1.0) >= 0.9.5
-BuildRequires:  pkgconfig(x11)
-%if %mdkver >= 201200
-BuildRequires:	pkgconfig(libpng15)
-%else
-BuildRequires:	pkgconfig(libpng12)
-%endif
+BuildRequires:	pkgconfig(glib-2.0)
+BuildRequires:	pkgconfig(gobject-introspection-1.0)
+BuildRequires:	pkgconfig(libpng)
+BuildRequires:	pkgconfig(x11)
 %if %enable_tests
-BuildRequires:  x11-server-xvfb
+BuildRequires:	x11-server-xvfb
 # gw tests will fail without this
 BuildRequires:	fonts-ttf-dejavu
 %endif
@@ -84,6 +80,7 @@ Summary:	Development files for image handling library for GTK+
 Group:		Development/GNOME and GTK+
 Provides:	lib%{oname}%{api_version}-devel = %{version}-%{release}
 Requires:	%{libname} = %{version}-%{release}
+Requires:	%{girname} = %{version}-%{release}
 Obsoletes:	%{_lib}gdk_pixbuf2.0_0-devel
 
 %description -n %{develname}
