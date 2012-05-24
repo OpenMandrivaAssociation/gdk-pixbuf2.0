@@ -18,7 +18,7 @@
 Summary:	Image loading and manipulation library for GTK+
 Name:		%{pkgname}%{api_version}
 Version:	2.26.1
-Release:	3
+Release:	4
 License:	LGPLv2+
 Group:		System/Libraries
 URL:		http://www.gtk.org
@@ -107,7 +107,6 @@ export CFLAGS=`echo %{optflags} | sed -e 's/-fomit-frame-pointer//g'`
 #CONFIGURE_TOP=.. 
 export CPPFLAGS="-DGTK_COMPILATION"
 %configure \
-	--with-included-loaders=png \
 	--with-libjasper --with-x11 \
 %if !%{enable_gtkdoc}
 	--enable-gtk-doc=no
