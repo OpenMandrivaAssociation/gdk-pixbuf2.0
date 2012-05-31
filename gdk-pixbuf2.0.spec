@@ -18,7 +18,7 @@
 Summary:	Image loading and manipulation library for GTK+
 Name:		%{pkgname}%{api_version}
 Version:	2.26.1
-Release:	4
+Release:	5
 License:	LGPLv2+
 Group:		System/Libraries
 URL:		http://www.gtk.org
@@ -80,6 +80,7 @@ Summary:	Development files for image handling library for GTK+
 Group:		Development/GNOME and GTK+
 Provides:	lib%{oname}%{api_version}-devel = %{version}-%{release}
 Requires:	%{libname} = %{version}-%{release}
+Requires: 	%{name} = %{version}-%{release}
 Requires:	%{girname} = %{version}-%{release}
 Obsoletes:	%{_lib}gdk_pixbuf2.0_0-devel
 
