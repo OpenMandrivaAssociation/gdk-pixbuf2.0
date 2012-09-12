@@ -186,6 +186,7 @@ fi
 %{_bindir}/gdk-pixbuf-csource
 %{_bindir}/gdk-pixbuf-pixdata
 %{_libdir}/libgdk_pixbuf-%{api_version}.so
+%dir %{_includedir}/%{pkgname}-%{api_version}/
 %{_includedir}/%{pkgname}-%{api_version}/%{pkgname}/
 %{_libdir}/pkgconfig/gdk-pixbuf-%{api_version}.pc
 %{_datadir}/gir-1.0/GdkPixbuf-%{api_version}.gir
