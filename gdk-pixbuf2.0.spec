@@ -17,7 +17,7 @@
 
 Summary:	Image loading and manipulation library for GTK+
 Name:		%{pkgname}%{api_version}
-Version:	2.26.4
+Version:	2.26.5
 Release:	1
 License:	LGPLv2+
 Group:		System/Libraries
@@ -38,7 +38,7 @@ BuildRequires:	x11-server-xvfb
 BuildRequires:	fonts-ttf-dejavu
 %endif
 %if %enable_gtkdoc
-BuildRequires:	gtk-doc >= 0.9 
+BuildRequires:	gtk-doc >= 0.9
 BuildRequires:	sgml-tools
 BuildRequires:	texinfo
 %endif
@@ -82,7 +82,7 @@ Provides:	lib%{oname}%{api_version}-devel = %{version}-%{release}
 Requires:	%{libname} = %{version}-%{release}
 Requires: 	%{name} = %{version}-%{release}
 Requires:	%{girname} = %{version}-%{release}
-Obsoletes:	%{_lib}gdk_pixbuf2.0_0-devel
+Obsoletes:	%{_lib}gdk_pixbuf2.0_0-devel < 2.26
 
 %description -n %{develname}
 This package contains the development files needed to compile programs
@@ -105,7 +105,7 @@ that uses GTK+ image loading/manipulation Xlib library.
 # fix crash in nautilus (GNOME bug #596977)
 export CFLAGS=`echo %{optflags} | sed -e 's/-fomit-frame-pointer//g'`
 
-#CONFIGURE_TOP=.. 
+#CONFIGURE_TOP=..
 export CPPFLAGS="-DGTK_COMPILATION"
 %configure \
 	--with-libjasper --with-x11 \
@@ -159,7 +159,7 @@ fi
 %{_libdir}/%{pkgname}-%{api_version}/bin/gdk-pixbuf-query-loaders --update-cache
 
 %triggerpostun -- %{_libdir}/gdk-pixbuf-%{api_version}/%{binary_version}/loaders/*.so
-if [ -x %_bindir/gdk-pixbuf-query-loaders ]; then
+if [ -x %{_bindir}/gdk-pixbuf-query-loaders ]; then
 %{_libdir}/%{pkgname}-%{api_version}/bin/gdk-pixbuf-query-loaders --update-cache
 fi
 
@@ -186,7 +186,6 @@ fi
 %{_bindir}/gdk-pixbuf-csource
 %{_bindir}/gdk-pixbuf-pixdata
 %{_libdir}/libgdk_pixbuf-%{api_version}.so
-%dir %{_includedir}/%{pkgname}-%{api_version}/
 %{_includedir}/%{pkgname}-%{api_version}/%{pkgname}/
 %{_libdir}/pkgconfig/gdk-pixbuf-%{api_version}.pc
 %{_datadir}/gir-1.0/GdkPixbuf-%{api_version}.gir
