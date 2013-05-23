@@ -13,6 +13,7 @@
 %define devname		%mklibname -d %{oname} %{api}
 %define devxlib		%mklibname -d %{oname}_xlib %{api}
 %define girname		%mklibname %{oname}-gir %{api}
+%bcond_with	bootstrap
 
 Summary:	Image loading and manipulation library for GTK+
 Name:		%{pkgname}%{api}
@@ -66,12 +67,14 @@ Group:		System/Libraries
 This package contains libraries used by GTK+ to load and handle
 various image formats.
 
+%if !%{with bootstrap}
 %package -n %{girname}
 Summary:	GObject Introspection interface description for %{name}
 Group:		System/Libraries
 
 %description -n %{girname}
 GObject Introspection interface description for %{name}.
+%endif
 
 %package -n %{devname}
 Summary:	Development files for image handling library for GTK+
@@ -79,7 +82,9 @@ Group:		Development/GNOME and GTK+
 Provides:	%{oname}%{api}-devel = %{version}-%{release}
 Requires: 	%{name} = %{version}-%{release}
 Requires:	%{libname} = %{version}-%{release}
+%if !%{with bootstrap}
 Requires:	%{girname} = %{version}-%{release}
+%endif
 Obsoletes:	%{_lib}gdk_pixbuf2.0_0-devel < 2.26
 
 %description -n %{devname}
@@ -108,6 +113,10 @@ export CPPFLAGS="-DGTK_COMPILATION"
 %configure2_5x \
 	--with-libjasper \
 	--with-x11 \
+%if %{with bootstrap}
+	--enable-gio-sniffing=no \
+	--enable-introspection=no \
+%endif
 %if !%{enable_gtkdoc}
 	--enable-gtk-doc=no
 %endif
@@ -173,8 +182,10 @@ fi
 %files -n %{xlibname}
 %{_libdir}/libgdk_pixbuf_xlib-%{api}.so.%{major}*
 
+%if !%{with bootstrap}
 %files -n %{girname}
 %{_libdir}/girepository-1.0/GdkPixbuf-%{api}.typelib
+%endif
 
 %files -n %{devname}
 %doc %{_datadir}/gtk-doc/html/gdk-pixbuf
@@ -183,7 +194,9 @@ fi
 %{_libdir}/libgdk_pixbuf-%{api}.so
 %{_includedir}/%{pkgname}-%{api}/%{pkgname}/
 %{_libdir}/pkgconfig/gdk-pixbuf-%{api}.pc
+%if !%{with bootstrap}
 %{_datadir}/gir-1.0/GdkPixbuf-%{api}.gir
+%endif
 %{_mandir}/man1/gdk-pixbuf-csource.1*
 
 %files -n %{devxlib}
