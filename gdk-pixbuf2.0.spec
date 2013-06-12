@@ -2,22 +2,22 @@
 %define enable_tests 0
 %define _disable_ld_as_needed	1
 
-%define oname	gdk_pixbuf
-%define pkgname	gdk-pixbuf
-%define binver	2.10.0
-%define api	2.0
-%define major	0
+%define oname gdk_pixbuf
+%define pkgname gdk-pixbuf
+%define binver 2.10.0
+%define api 2.0
+%define major 0
 
-%define libname		%mklibname %{oname} %{api} %{major}
-%define xlibname	%mklibname %{oname}_xlib %{api} %{major}
-%define devname		%mklibname -d %{oname} %{api}
-%define devxlib		%mklibname -d %{oname}_xlib %{api}
-%define girname		%mklibname %{oname}-gir %{api}
-%bcond_with	bootstrap
+%define libname %mklibname %{oname} %{api} %{major}
+%define xlibname %mklibname %{oname}_xlib %{api} %{major}
+%define devname %mklibname -d %{oname} %{api}
+%define devxlib %mklibname -d %{oname}_xlib %{api}
+%define girname %mklibname %{oname}-gir %{api}
+%bcond_with bootstrap
 
 Summary:	Image loading and manipulation library for GTK+
 Name:		%{pkgname}%{api}
-Version:	2.28.1
+Version:	2.28.2
 Release:	1
 License:	LGPLv2+
 Group:		System/Libraries
