@@ -17,8 +17,8 @@
 
 Summary:	Image loading and manipulation library for GTK+
 Name:		%{pkgname}%{api}
-Version:	2.31.1
-Release:	2
+Version:	2.31.3
+Release:	1
 License:	LGPLv2+
 Group:		System/Libraries
 Url:		http://www.gtk.org
