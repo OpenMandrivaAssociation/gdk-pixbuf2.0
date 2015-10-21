@@ -2,5 +2,6 @@ removed_sources:
   gdk-pixbuf-2.28.2.tar.xz: 9876d0a20f592f8fb2a52d4a86ec43d607661beb
   gdk-pixbuf-2.30.7.tar.xz: abc5c3ba166896d7ae165b18fde7288151af1404
   gdk-pixbuf-2.31.1.tar.xz: c715e21cacb939d2015c26124640b0aad6ad1986
-sources:
   gdk-pixbuf-2.31.3.tar.xz: 78621344eb8b0a960d475f37a8dd1232cc0322b2
+sources:
+  gdk-pixbuf-2.32.1.tar.xz: 40482f165f3fc587e54a08bb9212aeca97e2d07d
