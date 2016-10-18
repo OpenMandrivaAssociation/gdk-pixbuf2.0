@@ -18,8 +18,8 @@
 
 Summary:	Image loading and manipulation library for GTK+
 Name:		%{pkgname}%{api}
-Version:	2.32.1
-Release:	3
+Version:	2.36.0
+Release:	1
 License:	LGPLv2+
 Group:		System/Libraries
 Url:		http://www.gtk.org
@@ -111,7 +111,7 @@ export CFLAGS=`echo %{optflags} | sed -e 's/-fomit-frame-pointer//g'`
 
 #CONFIGURE_TOP=..
 export CPPFLAGS="-DGTK_COMPILATION"
-%configure2_5x \
+%configure \
 	--with-libjasper \
 	--with-x11 \
 %if %{with bootstrap}
@@ -154,9 +154,9 @@ done
 
 %post
 if [ "$1" = "2" ]; then
-  if [ -f %{_libdir}/%{pkgname}-%{api}/%{binver}/loaders.cache ]; then
-    rm -f %{_libdir}/%{pkgname}-%{api}/%{binver}/loaders.cache
-  fi
+    if [ -f %{_libdir}/%{pkgname}-%{api}/%{binver}/loaders.cache ]; then
+	rm -f %{_libdir}/%{pkgname}-%{api}/%{binver}/loaders.cache
+    fi
 fi
 %{_libdir}/%{pkgname}-%{api}/bin/gdk-pixbuf-query-loaders --update-cache
 
@@ -165,7 +165,7 @@ fi
 
 %triggerpostun -- %{_libdir}/gdk-pixbuf-%{api}/%{binver}/loaders/*.so
 if [ -x %{_bindir}/gdk-pixbuf-query-loaders ]; then
-%{_libdir}/%{pkgname}-%{api}/bin/gdk-pixbuf-query-loaders --update-cache
+    %{_libdir}/%{pkgname}-%{api}/bin/gdk-pixbuf-query-loaders --update-cache
 fi
 
 %files -f %{pkgname}.lang
@@ -204,4 +204,3 @@ fi
 %{_libdir}/libgdk_pixbuf_xlib-%{api}.so
 %{_includedir}/%{pkgname}-%{api}/%{pkgname}-xlib/
 %{_libdir}/pkgconfig/gdk-pixbuf-xlib-%{api}.pc
-
