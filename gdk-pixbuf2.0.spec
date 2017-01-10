@@ -171,10 +171,12 @@ fi
 %files -f %{pkgname}.lang
 %doc README
 %{_bindir}/gdk-pixbuf-query-loaders
+%{_bindir}/gdk-pixbuf-thumbnailer
 %dir %{_libdir}/%{pkgname}-%{api}/%{binver}/loaders
 %{_libdir}/%{pkgname}-%{api}/%{binver}/loaders/*.so
 %{_libdir}/%{pkgname}-%{api}/bin/gdk-pixbuf-query-loaders
 %ghost %verify (not md5 mtime size) %{_libdir}/%{pkgname}-%{api}/%{binver}/loaders.cache
+%{_datadir}/thumbnailers/gdk-pixbuf-thumbnailer.thumbnailer
 %{_mandir}/man1/gdk-pixbuf-query-loaders.1*
 
 %files -n %{libname}
