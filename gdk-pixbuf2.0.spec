@@ -18,7 +18,7 @@
 
 Summary:	Image loading and manipulation library for GTK+
 Name:		%{pkgname}%{api}
-Version:	2.36.0
+Version:	2.36.3
 Release:	1
 License:	LGPLv2+
 Group:		System/Libraries
@@ -171,10 +171,12 @@ fi
 %files -f %{pkgname}.lang
 %doc README
 %{_bindir}/gdk-pixbuf-query-loaders
+%{_bindir}/gdk-pixbuf-thumbnailer
 %dir %{_libdir}/%{pkgname}-%{api}/%{binver}/loaders
 %{_libdir}/%{pkgname}-%{api}/%{binver}/loaders/*.so
 %{_libdir}/%{pkgname}-%{api}/bin/gdk-pixbuf-query-loaders
 %ghost %verify (not md5 mtime size) %{_libdir}/%{pkgname}-%{api}/%{binver}/loaders.cache
+%{_datadir}/thumbnailers/gdk-pixbuf-thumbnailer.thumbnailer
 %{_mandir}/man1/gdk-pixbuf-query-loaders.1*
 
 %files -n %{libname}
