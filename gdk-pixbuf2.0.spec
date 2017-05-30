@@ -18,12 +18,12 @@
 
 Summary:	Image loading and manipulation library for GTK+
 Name:		%{pkgname}%{api}
-Version:	2.36.3
+Version:	2.36.6
 Release:	1
 License:	LGPLv2+
 Group:		System/Libraries
 Url:		http://www.gtk.org
-Source0:	http://ftp.gnome.org/pub/GNOME/sources/gdk-pixbuf/2.32/%{pkgname}-%{version}.tar.xz
+Source0:	http://ftp.gnome.org/pub/GNOME/sources/gdk-pixbuf/%(echo %{version} |cut -d. -f1-2)/%{pkgname}-%{version}.tar.xz
 
 BuildRequires:	gettext-devel
 BuildRequires:	jasper-devel
