@@ -33,6 +33,7 @@ BuildRequires:	pkgconfig(glib-2.0)
 BuildRequires:	pkgconfig(gobject-introspection-1.0)
 BuildRequires:	pkgconfig(libpng)
 BuildRequires:	pkgconfig(x11)
+BuildRequires:	pkgconfig(shared-mime-info)
 %if %enable_tests
 BuildRequires:	x11-server-xvfb
 # gw tests will fail without this
