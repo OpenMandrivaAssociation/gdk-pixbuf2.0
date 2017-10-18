@@ -19,7 +19,7 @@
 Summary:	Image loading and manipulation library for GTK+
 Name:		%{pkgname}%{api}
 Version:	2.36.11
-Release:	1
+Release:	2
 License:	LGPLv2+
 Group:		System/Libraries
 Url:		http://www.gtk.org
@@ -45,6 +45,7 @@ BuildRequires:	sgml-tools
 BuildRequires:	texinfo
 %endif
 Requires:	common-licenses
+Requires:	shared-mime-info
 Conflicts:	gtk+2.0 < 2.21.3
 Conflicts:	%{_lib}gdk_pixbuf2.0_0 < 2.24.0-6
 
