@@ -19,7 +19,7 @@
 Summary:	Image loading and manipulation library for GTK+
 Name:		%{pkgname}%{api}
 Version:	2.36.12
-Release:	2
+Release:	3
 License:	LGPLv2+
 Group:		System/Libraries
 Url:		http://www.gtk.org
@@ -105,7 +105,7 @@ This package contains the development files needed to compile programs
 that uses GTK+ image loading/manipulation Xlib library.
 
 %prep
-%setup -qn %{pkgname}-%{version}
+%autosetup -n %{pkgname}-%{version} -p1
 
 %build
 # fix crash in nautilus (GNOME bug #596977)
@@ -124,7 +124,7 @@ export CPPFLAGS="-DGTK_COMPILATION"
 	--enable-gtk-doc=no
 %endif
 
-%make
+%make_build
 
 %if %enable_tests
 %check
@@ -132,7 +132,7 @@ xvfb-run make check
 %endif
 
 %install
-%makeinstall_std RUN_QUERY_LOADER_TEST=false
+%make_install RUN_QUERY_LOADER_TEST=false
 
 touch %{buildroot}%{_libdir}/%{pkgname}-%{api}/%{binver}/loaders.cache
 
@@ -162,10 +162,10 @@ if [ "$1" = "2" ]; then
 fi
 %{_libdir}/%{pkgname}-%{api}/bin/gdk-pixbuf-query-loaders --update-cache
 
-%triggerin -- %{_libdir}/gdk-pixbuf-%{api}/%{binver}/loaders/*.so
+%transfiletriggerin -- %{_libdir}/gdk-pixbuf-%{api}/%{binver}/loaders/
 %{_libdir}/%{pkgname}-%{api}/bin/gdk-pixbuf-query-loaders --update-cache
 
-%triggerpostun -- %{_libdir}/gdk-pixbuf-%{api}/%{binver}/loaders/*.so
+%transfiletriggerpostun -- %{_libdir}/gdk-pixbuf-%{api}/%{binver}/loaders/
 if [ -x %{_bindir}/gdk-pixbuf-query-loaders ]; then
     %{_libdir}/%{pkgname}-%{api}/bin/gdk-pixbuf-query-loaders --update-cache
 fi
