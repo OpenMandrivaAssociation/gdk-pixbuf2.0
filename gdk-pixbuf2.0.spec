@@ -112,7 +112,7 @@ export CFLAGS=$(echo %{optflags} | sed -e 's/-fomit-frame-pointer//g')
 
 %meson \
 	-Djasper=true \
-	-Dbuiltin_loaders=all \
+	-Dbuiltin_loaders=none \
 %if %{with bootstrap}
 	-Dman=false \
 	-Dgir=false \
