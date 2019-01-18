@@ -24,7 +24,7 @@ License:	LGPLv2+
 Group:		System/Libraries
 Url:		http://www.gtk.org
 Source0:	http://ftp.gnome.org/pub/GNOME/sources/gdk-pixbuf/%(echo %{version} |cut -d. -f1-2)/%{pkgname}-%{version}.tar.xz
-
+BuildRequires:	meson
 BuildRequires:	gettext-devel
 BuildRequires:	pkgconfig(jasper)
 BuildRequires:	pkgconfig(libjpeg)
@@ -107,32 +107,28 @@ that uses GTK+ image loading/manipulation Xlib library.
 %prep
 %autosetup -n %{pkgname}-%{version} -p1
 
-%build
-# fix crash in nautilus (GNOME bug #596977)
-export CFLAGS=`echo %{optflags} | sed -e 's/-fomit-frame-pointer//g'`
-
-#CONFIGURE_TOP=..
-export CPPFLAGS="-DGTK_COMPILATION"
-%configure \
-	--with-libjasper \
-	--with-x11 \
+%meson \
+	-Djasper=tue
+	-Dbuiltin_loaders=all \
 %if %{with bootstrap}
-	--enable-gio-sniffing=no \
-	--enable-introspection=no \
+	-Dman=false \
+	-Dgir=false \
 %endif
 %if !%{enable_gtkdoc}
-	--enable-gtk-doc=no
+	-Ddocs=false
 %endif
+	-Dinstalled_tests=false
 
-%make_build
+%build
+%meson_build
 
 %if %enable_tests
 %check
-xvfb-run make check
+xvfb-run %meson_test
 %endif
 
 %install
-%make_install RUN_QUERY_LOADER_TEST=false
+%meson_install RUN_QUERY_LOADER_TEST=false
 
 touch %{buildroot}%{_libdir}/%{pkgname}-%{api}/%{binver}/loaders.cache
 
