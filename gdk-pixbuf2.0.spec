@@ -112,7 +112,7 @@ export CFLAGS=$(echo %{optflags} | sed -e 's/-fomit-frame-pointer//g')
 
 %meson \
 	-Djasper=true \
-	-Dbuiltin_loaders=none \
+	-Dbuiltin_loaders=png \
 %if %{with bootstrap}
 	-Dman=false \
 	-Dgir=false \
@@ -123,7 +123,7 @@ export CFLAGS=$(echo %{optflags} | sed -e 's/-fomit-frame-pointer//g')
 	-Dinstalled_tests=false
 
 %build
-%meson_build
+%meson_build -j2
 
 %if %enable_tests
 %check
