@@ -170,7 +170,6 @@ if [ -x %{_bindir}/gdk-pixbuf-query-loaders ]; then
 fi
 
 %files -f %{pkgname}.lang
-%doc README
 %{_bindir}/gdk-pixbuf-query-loaders
 %{_bindir}/gdk-pixbuf-thumbnailer
 %dir %{_libdir}/%{pkgname}-%{api}/%{binver}/loaders
