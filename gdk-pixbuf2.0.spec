@@ -185,7 +185,7 @@ fi
 %files -n %{xlibname}
 %{_libdir}/libgdk_pixbuf_xlib-%{api}.so.%{major}*
 
-%if %{with bootstrap}
+%if !%{with bootstrap}
 %files -n %{girname}
 %{_libdir}/girepository-1.0/GdkPixbuf-%{api}.typelib
 %{_libdir}/girepository-1.0/GdkPixdata-%{api}.typelib
