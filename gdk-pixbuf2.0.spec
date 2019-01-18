@@ -1,4 +1,4 @@
-%define enable_gtkdoc 0
+%define enable_gtkdoc 1
 %define enable_tests 0
 %define _disable_ld_as_needed	1
 %define _disable_rebuild_configure 1
@@ -114,11 +114,11 @@ export CFLAGS=$(echo %{optflags} | sed -e 's/-fomit-frame-pointer//g')
 	-Djasper=true \
 	-Dbuiltin_loaders=png \
 %if %{with bootstrap}
-	-Dman=false \
 	-Dgir=false \
 %endif
-%if !%{enable_gtkdoc}
-	-Ddocs=false \
+%if %{enable_gtkdoc}
+	-Ddocs=true \
+	-Dman=true \
 %endif
 	-Dinstalled_tests=false
 
