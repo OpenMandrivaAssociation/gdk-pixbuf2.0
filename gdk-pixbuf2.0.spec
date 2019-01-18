@@ -188,6 +188,7 @@ fi
 %if %{with bootstrap}
 %files -n %{girname}
 %{_libdir}/girepository-1.0/GdkPixbuf-%{api}.typelib
+%{_libdir}/girepository-1.0/GdkPixdata-%{api}.typelib
 %endif
 
 %files -n %{devname}
@@ -197,8 +198,9 @@ fi
 %{_libdir}/libgdk_pixbuf-%{api}.so
 %{_includedir}/%{pkgname}-%{api}/%{pkgname}/
 %{_libdir}/pkgconfig/gdk-pixbuf-%{api}.pc
-%if %{with bootstrap}
+%if !%{with bootstrap}
 %{_datadir}/gir-1.0/GdkPixbuf-%{api}.gir
+%{_datadir}/gir-1.0/GdkPixdata-%{api}.gir
 %endif
 %{_mandir}/man1/gdk-pixbuf-csource.1*
 
