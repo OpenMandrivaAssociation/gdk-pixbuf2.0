@@ -118,7 +118,7 @@ export CFLAGS=$(echo %{optflags} | sed -e 's/-fomit-frame-pointer//g')
 	-Dgir=false \
 %endif
 %if !%{enable_gtkdoc}
-	-Ddocs=false
+	-Ddocs=false \
 %endif
 	-Dinstalled_tests=false
 
