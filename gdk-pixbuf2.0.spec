@@ -108,7 +108,7 @@ that uses GTK+ image loading/manipulation Xlib library.
 %autosetup -n %{pkgname}-%{version} -p1
 
 %meson \
-	-Djasper=tue
+	-Djasper=true
 	-Dbuiltin_loaders=all \
 %if %{with bootstrap}
 	-Dman=false \
