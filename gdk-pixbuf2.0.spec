@@ -107,8 +107,11 @@ that uses GTK+ image loading/manipulation Xlib library.
 %prep
 %autosetup -n %{pkgname}-%{version} -p1
 
+# fix crash in nautilus (GNOME bug #596977)
+export CFLAGS=$(echo %{optflags} | sed -e 's/-fomit-frame-pointer//g')
+
 %meson \
-	-Djasper=true
+	-Djasper=true \
 	-Dbuiltin_loaders=all \
 %if %{with bootstrap}
 	-Dman=false \
