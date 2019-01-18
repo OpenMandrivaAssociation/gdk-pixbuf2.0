@@ -131,7 +131,7 @@ xvfb-run %meson_test
 %endif
 
 %install
-%meson_install RUN_QUERY_LOADER_TEST=false
+%meson_install
 
 touch %{buildroot}%{_libdir}/%{pkgname}-%{api}/%{binver}/loaders.cache
 
