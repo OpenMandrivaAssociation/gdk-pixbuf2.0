@@ -194,7 +194,10 @@ fi
 %endif
 
 %files -n %{devname}
+%if %enable_gtkdoc
 %doc %{_datadir}/gtk-doc/html/gdk-pixbuf
+%{_mandir}/man1/gdk-pixbuf-csource.1*
+%endif
 %{_bindir}/gdk-pixbuf-csource
 %{_bindir}/gdk-pixbuf-pixdata
 %{_libdir}/libgdk_pixbuf-%{api}.so
@@ -204,7 +207,6 @@ fi
 %{_datadir}/gir-1.0/GdkPixbuf-%{api}.gir
 %{_datadir}/gir-1.0/GdkPixdata-%{api}.gir
 %endif
-%{_mandir}/man1/gdk-pixbuf-csource.1*
 
 %files -n %{devxlib}
 %{_libdir}/libgdk_pixbuf_xlib-%{api}.so
