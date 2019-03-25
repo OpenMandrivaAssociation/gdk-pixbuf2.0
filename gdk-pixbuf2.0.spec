@@ -177,7 +177,9 @@ fi
 %{_libdir}/%{pkgname}-%{api}/bin/gdk-pixbuf-query-loaders
 %ghost %verify (not md5 mtime size) %{_libdir}/%{pkgname}-%{api}/%{binver}/loaders.cache
 %{_datadir}/thumbnailers/gdk-pixbuf-thumbnailer.thumbnailer
+%if !%{with bootstrap}
 %{_mandir}/man1/gdk-pixbuf-query-loaders.1*
+%endif
 
 %files -n %{libname}
 %{_libdir}/libgdk_pixbuf-%{api}.so.%{major}*
