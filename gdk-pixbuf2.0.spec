@@ -1,4 +1,4 @@
-%define enable_gtkdoc 1
+%define enable_gtkdoc 0
 %define enable_tests 0
 %define _disable_ld_as_needed	1
 %define _disable_rebuild_configure 1
