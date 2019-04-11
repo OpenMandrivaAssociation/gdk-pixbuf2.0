@@ -178,7 +178,7 @@ fi
 %ghost %verify (not md5 mtime size) %{_libdir}/%{pkgname}-%{api}/%{binver}/loaders.cache
 %{_datadir}/thumbnailers/gdk-pixbuf-thumbnailer.thumbnailer
 %if !%{with bootstrap}
-%{_mandir}/man1/gdk-pixbuf-query-loaders.1*
+%{_mandir}/man1/gdk-pixbuf-query-loaders*
 %endif
 
 %files -n %{libname}
