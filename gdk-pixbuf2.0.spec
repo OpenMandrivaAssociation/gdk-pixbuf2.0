@@ -14,11 +14,11 @@
 %define devname %mklibname -d %{oname} %{api}
 %define devxlib %mklibname -d %{oname}_xlib %{api}
 %define girname %mklibname %{oname}-gir %{api}
-%bcond_with bootstrap
+%bcond_without bootstrap
 
 Summary:	Image loading and manipulation library for GTK+
 Name:		%{pkgname}%{api}
-Version:	2.38.0
+Version:	2.38.1
 Release:	1
 License:	LGPLv2+
 Group:		System/Libraries
