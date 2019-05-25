@@ -19,7 +19,7 @@
 Summary:	Image loading and manipulation library for GTK+
 Name:		%{pkgname}%{api}
 Version:	2.38.1
-Release:	1
+Release:	2
 License:	LGPLv2+
 Group:		System/Libraries
 Url:		http://www.gtk.org
@@ -135,21 +135,9 @@ xvfb-run %meson_test
 
 touch %{buildroot}%{_libdir}/%{pkgname}-%{api}/%{binver}/loaders.cache
 
-# handle biarch packages
-progs="gdk-pixbuf-query-loaders"
-mkdir -p %{buildroot}%{_libdir}/%{pkgname}-%{api}/bin
-for f in $progs; do
-  mv -f %{buildroot}%{_bindir}/$f %{buildroot}%{_libdir}/%{pkgname}-%{api}/bin/
-  cat > %{buildroot}%{_bindir}/$f << EOF
-#!/bin/sh
-lib=%{_lib}
-case ":\$1:" in
-:lib*:) lib="\$1"; shift 1;;
-esac
-exec %{_prefix}/\$lib/%{pkgname}-%{api}/bin/$f \${1+"\$@"}
-EOF
-  chmod +x %{buildroot}%{_bindir}/$f
-done
+(cd %{buildroot}%{_bindir}
+ mv gdk-pixbuf-query-loaders gdk-pixbuf-query-loaders-%{__isa_bits}
+)
 
 %find_lang %{pkgname}
 
@@ -162,19 +150,18 @@ fi
 %{_libdir}/%{pkgname}-%{api}/bin/gdk-pixbuf-query-loaders --update-cache
 
 %transfiletriggerin -- %{_libdir}/gdk-pixbuf-%{api}/%{binver}/loaders/
-%{_libdir}/%{pkgname}-%{api}/bin/gdk-pixbuf-query-loaders --update-cache
+%{_libdir}/%{pkgname}-%{api}/bin/gdk-pixbuf-query-loaders-%{__isa_bits} --update-cache
 
 %transfiletriggerpostun -- %{_libdir}/gdk-pixbuf-%{api}/%{binver}/loaders/
 if [ -x %{_bindir}/gdk-pixbuf-query-loaders ]; then
-    %{_libdir}/%{pkgname}-%{api}/bin/gdk-pixbuf-query-loaders --update-cache
+    %{_libdir}/%{pkgname}-%{api}/bin/gdk-pixbuf-query-loaders-%{__isa_bits} --update-cache
 fi
 
 %files -f %{pkgname}.lang
-%{_bindir}/gdk-pixbuf-query-loaders
+%{_bindir}/gdk-pixbuf-query-loaders-%{__isa_bits}
 %{_bindir}/gdk-pixbuf-thumbnailer
 %dir %{_libdir}/%{pkgname}-%{api}/%{binver}/loaders
 %{_libdir}/%{pkgname}-%{api}/%{binver}/loaders/*.so
-%{_libdir}/%{pkgname}-%{api}/bin/gdk-pixbuf-query-loaders
 %ghost %verify (not md5 mtime size) %{_libdir}/%{pkgname}-%{api}/%{binver}/loaders.cache
 %{_datadir}/thumbnailers/gdk-pixbuf-thumbnailer.thumbnailer
 # Not exist?
