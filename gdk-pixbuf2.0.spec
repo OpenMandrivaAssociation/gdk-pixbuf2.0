@@ -19,7 +19,7 @@
 Summary:	Image loading and manipulation library for GTK+
 Name:		%{pkgname}%{api}
 Version:	2.38.1
-Release:	2
+Release:	3
 License:	LGPLv2+
 Group:		System/Libraries
 Url:		http://www.gtk.org
@@ -147,14 +147,14 @@ if [ "$1" = "2" ]; then
 	rm -f %{_libdir}/%{pkgname}-%{api}/%{binver}/loaders.cache
     fi
 fi
-%{_libdir}/%{pkgname}-%{api}/bin/gdk-pixbuf-query-loaders --update-cache
+%{_bindir}/gdk-pixbuf-query-loaders-%{__isa_bits} --update-cache
 
 %transfiletriggerin -- %{_libdir}/gdk-pixbuf-%{api}/%{binver}/loaders/
-%{_libdir}/%{pkgname}-%{api}/bin/gdk-pixbuf-query-loaders-%{__isa_bits} --update-cache
+%{_bindir}/gdk-pixbuf-query-loaders-%{__isa_bits} --update-cache
 
 %transfiletriggerpostun -- %{_libdir}/gdk-pixbuf-%{api}/%{binver}/loaders/
-if [ -x %{_bindir}/gdk-pixbuf-query-loaders ]; then
-    %{_libdir}/%{pkgname}-%{api}/bin/gdk-pixbuf-query-loaders-%{__isa_bits} --update-cache
+if [ -x %{_bindir}/gdk-pixbuf-query-loaders-%{__isa_bits} ]; then
+    %{_bindir}/gdk-pixbuf-query-loaders-%{__isa_bits} --update-cache
 fi
 
 %files -f %{pkgname}.lang
