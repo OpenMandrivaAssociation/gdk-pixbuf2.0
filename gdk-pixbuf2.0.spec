@@ -19,7 +19,7 @@
 Summary:	Image loading and manipulation library for GTK+
 Name:		%{pkgname}%{api}
 Version:	2.40.0
-Release:	1
+Release:	2
 License:	LGPLv2+
 Group:		System/Libraries
 Url:		http://www.gtk.org
@@ -158,19 +158,20 @@ if [ -x %{_bindir}/gdk-pixbuf-query-loaders-%{__isa_bits} ]; then
 fi
 
 %files -f %{pkgname}.lang
-%{_bindir}/gdk-pixbuf-query-loaders-%{__isa_bits}
 %{_bindir}/gdk-pixbuf-thumbnailer
+%{_datadir}/thumbnailers/gdk-pixbuf-thumbnailer.thumbnailer
+%if %enable_gtkdoc
+%if !%{with bootstrap}
+%%{_mandir}/man1/gdk-pixbuf-query-loaders.1*
+%endif
+%endif
+
+%files -n %{libname}
+%{_bindir}/gdk-pixbuf-query-loaders-%{__isa_bits}
+%{_libdir}/libgdk_pixbuf-%{api}.so.%{major}*
 %dir %{_libdir}/%{pkgname}-%{api}/%{binver}/loaders
 %{_libdir}/%{pkgname}-%{api}/%{binver}/loaders/*.so
 %ghost %verify (not md5 mtime size) %{_libdir}/%{pkgname}-%{api}/%{binver}/loaders.cache
-%{_datadir}/thumbnailers/gdk-pixbuf-thumbnailer.thumbnailer
-# Not exist?
-#%if !%{with bootstrap}
-#%{_mandir}/man1/gdk-pixbuf-query-loaders.1*
-#%endif
-
-%files -n %{libname}
-%{_libdir}/libgdk_pixbuf-%{api}.so.%{major}*
 
 %files -n %{xlibname}
 %{_libdir}/libgdk_pixbuf_xlib-%{api}.so.%{major}*
