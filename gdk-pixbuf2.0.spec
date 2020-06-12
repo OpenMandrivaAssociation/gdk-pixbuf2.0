@@ -1,3 +1,8 @@
+# Wine uses gdk-pixbuf
+%ifarch %{x86_64}
+%bcond_without compat32
+%endif
+
 %define enable_gtkdoc 0
 %define enable_tests 0
 %define _disable_ld_as_needed	1
@@ -14,12 +19,17 @@
 %define devname %mklibname -d %{oname} %{api}
 %define devxlib %mklibname -d %{oname}_xlib %{api}
 %define girname %mklibname %{oname}-gir %{api}
+
+%define lib32name %mklib32name %{oname} %{api} %{major}
+%define xlib32name %mklib32name %{oname}_xlib %{api} %{major}
+%define dev32name %mklib32name -d %{oname} %{api}
+%define devx32lib %mklib32name -d %{oname}_xlib %{api}
 %bcond_with bootstrap
 
 Summary:	Image loading and manipulation library for GTK+
 Name:		%{pkgname}%{api}
 Version:	2.40.0
-Release:	2
+Release:	3
 License:	LGPLv2+
 Group:		System/Libraries
 Url:		http://www.gtk.org
@@ -48,6 +58,22 @@ Requires:	common-licenses
 Requires:	shared-mime-info
 Conflicts:	gtk+2.0 < 2.21.3
 Conflicts:	%{_lib}gdk_pixbuf2.0_0 < 2.24.0-6
+%if %{with compat32}
+BuildRequires:	devel(libjpeg)
+BuildRequires:	devel(libtiff)
+BuildRequires:	devel(libglib-2.0)
+BuildRequires:	devel(libgobject-2.0)
+BuildRequires:	devel(libgio-2.0)
+BuildRequires:	devel(libgmodule-2.0)
+BuildRequires:	devel(libz)
+BuildRequires:	devel(libmount)
+BuildRequires:	devel(libblkid)
+BuildRequires:	devel(libpng16)
+BuildRequires:	devel(libX11)
+BuildRequires:	devel(libxcb)
+BuildRequires:	devel(libXau)
+BuildRequires:	devel(libXdmcp)
+%endif
 
 %description
 This package contains libraries used by GTK+ to load and handle
@@ -56,7 +82,6 @@ various image formats.
 %package -n %{libname}
 Summary:	Image loading and manipulation library for GTK+
 Group:		System/Libraries
-Provides:	lib%{oname}%{api} = %{version}-%{release}
 
 %description -n %{libname}
 This package contains libraries used by GTK+ to load and handle
@@ -82,7 +107,6 @@ GObject Introspection interface description for %{name}.
 %package -n %{devname}
 Summary:	Development files for image handling library for GTK+
 Group:		Development/GNOME and GTK+
-Provides:	%{oname}%{api}-devel = %{version}-%{release}
 Requires: 	%{name} = %{version}-%{release}
 Requires:	%{libname} = %{version}-%{release}
 %if !%{with bootstrap}
@@ -97,15 +121,60 @@ that uses GTK+ image loading/manipulation library.
 %package -n %{devxlib}
 Summary:	Development files for image handling library for GTK+ - Xlib
 Group:		Development/GNOME and GTK+
-Provides:	%{oname}_xlib%{api}-devel = %{version}-%{release}
 Requires:	%{xlibname} = %{version}-%{release}
 
 %description -n %{devxlib}
 This package contains the development files needed to compile programs
 that uses GTK+ image loading/manipulation Xlib library.
 
+%if %{with compat32}
+%package -n %{lib32name}
+Summary:	Image loading and manipulation library for GTK+ (32-bit)
+Group:		System/Libraries
+
+%description -n %{lib32name}
+This package contains libraries used by GTK+ to load and handle
+various image formats.
+
+%package -n %{xlib32name}
+Summary:	Image loading and manipulation library for GTK+ (32-bit)
+Group:		System/Libraries
+
+%description -n %{xlib32name}
+This package contains libraries used by GTK+ to load and handle
+various image formats.
+
+%package -n %{dev32name}
+Summary:	Development files for image handling library for GTK+ (32-bit)
+Group:		Development/GNOME and GTK+
+Requires: 	%{devname} = %{version}-%{release}
+Requires:	%{lib32name} = %{version}-%{release}
+
+%description -n %{dev32name}
+This package contains the development files needed to compile programs
+that uses GTK+ image loading/manipulation library.
+
+%package -n %{devx32lib}
+Summary:	Development files for image handling library for GTK+ - Xlib (32-bit)
+Group:		Development/GNOME and GTK+
+Requires:	%{xlib32name} = %{version}-%{release}
+
+%description -n %{devx32lib}
+This package contains the development files needed to compile programs
+that uses GTK+ image loading/manipulation Xlib library.
+%endif
+
 %prep
 %autosetup -n %{pkgname}-%{version} -p1
+
+%if %{with compat32}
+%meson32 \
+	-Dbuiltin_loaders=png \
+	-Dgir=false \
+	-Ddocs=false \
+	-Dman=false \
+	-Dinstalled_tests=false
+%endif
 
 # fix crash in nautilus (GNOME bug #596977)
 export CFLAGS=$(echo %{optflags} | sed -e 's/-fomit-frame-pointer//g')
@@ -123,6 +192,9 @@ export CFLAGS=$(echo %{optflags} | sed -e 's/-fomit-frame-pointer//g')
 	-Dinstalled_tests=false
 
 %build
+%if %{with compat32}
+%ninja_build -C build32 -j2
+%endif
 %meson_build -j2
 
 %if %enable_tests
@@ -131,6 +203,11 @@ xvfb-run %meson_test
 %endif
 
 %install
+%if %{with compat32}
+%ninja_install -C build32
+mv %{buildroot}%{_bindir}/gdk-pixbuf-query-loaders %{buildroot}%{_bindir}/gdk-pixbuf-query-loaders-32
+touch %{buildroot}%{_prefix}/lib/%{pkgname}-%{api}/%{binver}/loaders.cache
+%endif
 %meson_install
 
 touch %{buildroot}%{_libdir}/%{pkgname}-%{api}/%{binver}/loaders.cache
@@ -201,3 +278,23 @@ fi
 %{_libdir}/libgdk_pixbuf_xlib-%{api}.so
 %{_includedir}/%{pkgname}-%{api}/%{pkgname}-xlib/
 %{_libdir}/pkgconfig/gdk-pixbuf-xlib-%{api}.pc
+
+%if %{with compat32}
+%files -n %{lib32name}
+%{_bindir}/gdk-pixbuf-query-loaders-32
+%{_prefix}/lib/libgdk_pixbuf-%{api}.so.%{major}*
+%dir %{_prefix}/lib/%{pkgname}-%{api}/%{binver}/loaders
+%{_prefix}/lib/%{pkgname}-%{api}/%{binver}/loaders/*.so
+%ghost %verify (not md5 mtime size) %{_prefix}/lib/%{pkgname}-%{api}/%{binver}/loaders.cache
+
+%files -n %{xlib32name}
+%{_prefix}/lib/libgdk_pixbuf_xlib-%{api}.so.%{major}*
+
+%files -n %{dev32name}
+%{_prefix}/lib/libgdk_pixbuf-%{api}.so
+%{_prefix}/lib/pkgconfig/gdk-pixbuf-%{api}.pc
+
+%files -n %{devx32lib}
+%{_prefix}/lib/libgdk_pixbuf_xlib-%{api}.so
+%{_prefix}/lib/pkgconfig/gdk-pixbuf-xlib-%{api}.pc
+%endif
