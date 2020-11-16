@@ -59,6 +59,7 @@ Requires:	shared-mime-info
 Conflicts:	gtk+2.0 < 2.21.3
 Conflicts:	%{_lib}gdk_pixbuf2.0_0 < 2.24.0-6
 %if %{with compat32}
+BuildRequires:  devel(libgirepository-1.0)
 BuildRequires:	devel(libjpeg)
 BuildRequires:	devel(libtiff)
 BuildRequires:	devel(libglib-2.0)
