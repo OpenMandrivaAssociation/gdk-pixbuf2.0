@@ -200,7 +200,9 @@ fi
 %files -f %{pkgname}.lang
 %{_bindir}/gdk-pixbuf-thumbnailer
 %{_datadir}/thumbnailers/gdk-pixbuf-thumbnailer.thumbnailer
+%if %enable_gtkdoc
 %{_mandir}/man1/gdk-pixbuf-query-loaders.1*
+%endif
 
 %files -n %{libname}
 %{_bindir}/gdk-pixbuf-query-loaders-%{__isa_bits}
@@ -218,8 +220,8 @@ fi
 %files -n %{devname}
 %if %enable_gtkdoc
 %doc %{_datadir}/gtk-doc/html/gdk-pixbuf
-%endif
 %{_mandir}/man1/gdk-pixbuf-csource.1*
+%endif
 %{_bindir}/gdk-pixbuf-csource
 %{_bindir}/gdk-pixbuf-pixdata
 %{_libdir}/libgdk_pixbuf-%{api}.so
