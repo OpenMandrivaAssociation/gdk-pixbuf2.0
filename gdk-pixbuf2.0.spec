@@ -252,7 +252,7 @@ fi
 %ghost %verify (not md5 mtime size) %{_libdir}/%{pkgname}-%{api}/%{binver}/loaders.cache
 
 %files -n %{xlibname}
-%{_libdir}/libgdk_pixbuf_xlib-%{api}.so.%{major}*
+#{_libdir}/libgdk_pixbuf_xlib-%{api}.so.%{major}*
 
 %if !%{with bootstrap}
 %files -n %{girname}
