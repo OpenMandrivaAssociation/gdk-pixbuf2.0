@@ -173,7 +173,7 @@ that uses GTK+ image loading/manipulation Xlib library.
 	-Dgir=false \
 	-Ddocs=false \
 	-Dman=false \
-	-Dintrospection=false \
+	-Dintrospection=disabled \
 	-Dinstalled_tests=false
 %endif
 
