@@ -15,15 +15,11 @@
 %define major 0
 
 %define libname %mklibname %{oname} %{api} %{major}
-%define xlibname %mklibname %{oname}_xlib %{api} %{major}
 %define devname %mklibname -d %{oname} %{api}
-%define devxlib %mklibname -d %{oname}_xlib %{api}
 %define girname %mklibname %{oname}-gir %{api}
 
 %define lib32name %mklib32name %{oname} %{api} %{major}
-%define xlib32name %mklib32name %{oname}_xlib %{api} %{major}
 %define dev32name %mklib32name -d %{oname} %{api}
-%define devx32lib %mklib32name -d %{oname}_xlib %{api}
 %bcond_with bootstrap
 
 Summary:	Image loading and manipulation library for GTK+
@@ -59,7 +55,6 @@ Requires:	shared-mime-info
 Conflicts:	gtk+2.0 < 2.21.3
 Conflicts:	%{_lib}gdk_pixbuf2.0_0 < 2.24.0-6
 %if %{with compat32}
-BuildRequires:  devel(libgirepository-1.0)
 BuildRequires:	devel(libjpeg)
 BuildRequires:	devel(libtiff)
 BuildRequires:	devel(libglib-2.0)
@@ -88,14 +83,6 @@ Group:		System/Libraries
 This package contains libraries used by GTK+ to load and handle
 various image formats.
 
-%package -n %{xlibname}
-Summary:	Image loading and manipulation library for GTK+
-Group:		System/Libraries
-
-%description -n %{xlibname}
-This package contains libraries used by GTK+ to load and handle
-various image formats.
-
 %if !%{with bootstrap}
 %package -n %{girname}
 Summary:	GObject Introspection interface description for %{name}
@@ -119,29 +106,12 @@ Obsoletes:	%{_lib}gdk_pixbuf2.0_0-devel < 2.26
 This package contains the development files needed to compile programs
 that uses GTK+ image loading/manipulation library.
 
-%package -n %{devxlib}
-Summary:	Development files for image handling library for GTK+ - Xlib
-Group:		Development/GNOME and GTK+
-Requires:	%{xlibname} = %{version}-%{release}
-
-%description -n %{devxlib}
-This package contains the development files needed to compile programs
-that uses GTK+ image loading/manipulation Xlib library.
-
 %if %{with compat32}
 %package -n %{lib32name}
 Summary:	Image loading and manipulation library for GTK+ (32-bit)
 Group:		System/Libraries
 
 %description -n %{lib32name}
-This package contains libraries used by GTK+ to load and handle
-various image formats.
-
-%package -n %{xlib32name}
-Summary:	Image loading and manipulation library for GTK+ (32-bit)
-Group:		System/Libraries
-
-%description -n %{xlib32name}
 This package contains libraries used by GTK+ to load and handle
 various image formats.
 
@@ -154,15 +124,6 @@ Requires:	%{lib32name} = %{version}-%{release}
 %description -n %{dev32name}
 This package contains the development files needed to compile programs
 that uses GTK+ image loading/manipulation library.
-
-%package -n %{devx32lib}
-Summary:	Development files for image handling library for GTK+ - Xlib (32-bit)
-Group:		Development/GNOME and GTK+
-Requires:	%{xlib32name} = %{version}-%{release}
-
-%description -n %{devx32lib}
-This package contains the development files needed to compile programs
-that uses GTK+ image loading/manipulation Xlib library.
 %endif
 
 %prep
@@ -172,6 +133,7 @@ that uses GTK+ image loading/manipulation Xlib library.
 %meson32 \
 	-Dbuiltin_loaders=png \
 	-Dgir=false \
+	-Dintrospection=disabled \
 	-Ddocs=false \
 	-Dman=false \
 	-Dinstalled_tests=false
@@ -238,11 +200,7 @@ fi
 %files -f %{pkgname}.lang
 %{_bindir}/gdk-pixbuf-thumbnailer
 %{_datadir}/thumbnailers/gdk-pixbuf-thumbnailer.thumbnailer
-%if %enable_gtkdoc
-%if !%{with bootstrap}
-%%{_mandir}/man1/gdk-pixbuf-query-loaders.1*
-%endif
-%endif
+%{_mandir}/man1/gdk-pixbuf-query-loaders.1*
 
 %files -n %{libname}
 %{_bindir}/gdk-pixbuf-query-loaders-%{__isa_bits}
@@ -250,9 +208,6 @@ fi
 %dir %{_libdir}/%{pkgname}-%{api}/%{binver}/loaders
 %{_libdir}/%{pkgname}-%{api}/%{binver}/loaders/*.so
 %ghost %verify (not md5 mtime size) %{_libdir}/%{pkgname}-%{api}/%{binver}/loaders.cache
-
-%files -n %{xlibname}
-%{_libdir}/libgdk_pixbuf_xlib-%{api}.so.%{major}*
 
 %if !%{with bootstrap}
 %files -n %{girname}
@@ -263,8 +218,8 @@ fi
 %files -n %{devname}
 %if %enable_gtkdoc
 %doc %{_datadir}/gtk-doc/html/gdk-pixbuf
-%{_mandir}/man1/gdk-pixbuf-csource.1*
 %endif
+%{_mandir}/man1/gdk-pixbuf-csource.1*
 %{_bindir}/gdk-pixbuf-csource
 %{_bindir}/gdk-pixbuf-pixdata
 %{_libdir}/libgdk_pixbuf-%{api}.so
@@ -275,11 +230,6 @@ fi
 %{_datadir}/gir-1.0/GdkPixdata-%{api}.gir
 %endif
 
-%files -n %{devxlib}
-%{_libdir}/libgdk_pixbuf_xlib-%{api}.so
-%{_includedir}/%{pkgname}-%{api}/%{pkgname}-xlib/
-%{_libdir}/pkgconfig/gdk-pixbuf-xlib-%{api}.pc
-
 %if %{with compat32}
 %files -n %{lib32name}
 %{_bindir}/gdk-pixbuf-query-loaders-32
@@ -288,14 +238,7 @@ fi
 %{_prefix}/lib/%{pkgname}-%{api}/%{binver}/loaders/*.so
 %ghost %verify (not md5 mtime size) %{_prefix}/lib/%{pkgname}-%{api}/%{binver}/loaders.cache
 
-%files -n %{xlib32name}
-%{_prefix}/lib/libgdk_pixbuf_xlib-%{api}.so.%{major}*
-
 %files -n %{dev32name}
 %{_prefix}/lib/libgdk_pixbuf-%{api}.so
 %{_prefix}/lib/pkgconfig/gdk-pixbuf-%{api}.pc
-
-%files -n %{devx32lib}
-%{_prefix}/lib/libgdk_pixbuf_xlib-%{api}.so
-%{_prefix}/lib/pkgconfig/gdk-pixbuf-xlib-%{api}.pc
 %endif
