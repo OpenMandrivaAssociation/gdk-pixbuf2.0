@@ -132,7 +132,6 @@ that uses GTK+ image loading/manipulation library.
 %if %{with compat32}
 %meson32 \
 	-Dbuiltin_loaders=png \
-	-Dgir=false \
 	-Dintrospection=disabled \
 	-Ddocs=false \
 	-Dman=false \
@@ -144,10 +143,7 @@ export CFLAGS=$(echo %{optflags} | sed -e 's/-fomit-frame-pointer//g')
 
 %meson \
 	-Djasper=true \
-	-Dbuiltin_loaders=png \
-%if %{with bootstrap}
-	-Dgir=false \
-%endif
+	-Dbuiltin_loaders=all \
 %if %{enable_gtkdoc}
 	-Ddocs=true \
 	-Dman=true \
