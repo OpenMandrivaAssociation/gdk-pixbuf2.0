@@ -142,7 +142,6 @@ that uses GTK+ image loading/manipulation library.
 export CFLAGS=$(echo %{optflags} | sed -e 's/-fomit-frame-pointer//g')
 
 %meson \
-	-Djasper=true \
 	-Dbuiltin_loaders=all \
 %if %{enable_gtkdoc}
 	-Ddocs=true \
