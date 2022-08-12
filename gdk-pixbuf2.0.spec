@@ -217,8 +217,8 @@ fi
 
 %files -n %{devname}
 %if %enable_gtkdoc
-%doc %{_datadir}/doc/gtk-doc/gdk-pixbuf
-%doc %{_datadir}/doc/gtk-doc/gdk-pixdata
+%doc %{_datadir}/doc/gdk-pixbuf
+%doc %{_datadir}/doc/gdk-pixdata
 %{_mandir}/man1/gdk-pixbuf-csource.1*
 %endif
 %{_bindir}/gdk-pixbuf-csource
