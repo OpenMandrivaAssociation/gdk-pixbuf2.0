@@ -3,7 +3,7 @@
 %bcond_without compat32
 %endif
 
-%define enable_gtkdoc 0
+%define enable_gtkdoc 1
 %define enable_tests 0
 %define _disable_ld_as_needed	1
 %define _disable_rebuild_configure 1
@@ -40,9 +40,6 @@ BuildRequires:	pkgconfig(gobject-introspection-1.0)
 BuildRequires:	pkgconfig(libpng)
 BuildRequires:	pkgconfig(x11)
 BuildRequires:	pkgconfig(shared-mime-info)
-BuildRequires:	pkgconfig(gi-docgen)
-# For rst2man
-BuildRequires:	python3dist(docutils)
 %if %enable_tests
 BuildRequires:	x11-server-xvfb
 # gw tests will fail without this
@@ -52,6 +49,9 @@ BuildRequires:	fonts-ttf-dejavu
 BuildRequires:	gtk-doc >= 0.9
 BuildRequires:	sgml-tools
 BuildRequires:	texinfo
+BuildRequires:	pkgconfig(gi-docgen)
+# For rst2man
+BuildRequires:	python3dist(docutils)
 %endif
 Requires:	common-licenses
 Requires:	shared-mime-info
@@ -217,7 +217,7 @@ fi
 
 %files -n %{devname}
 %if %enable_gtkdoc
-%doc %{_datadir}/gtk-doc/html/gdk-pixbuf
+#doc %{_datadir}/gtk-doc/html/gdk-pixbuf
 %{_mandir}/man1/gdk-pixbuf-csource.1*
 %endif
 %{_bindir}/gdk-pixbuf-csource
