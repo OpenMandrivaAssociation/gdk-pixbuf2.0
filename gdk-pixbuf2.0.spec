@@ -40,6 +40,9 @@ BuildRequires:	pkgconfig(gobject-introspection-1.0)
 BuildRequires:	pkgconfig(libpng)
 BuildRequires:	pkgconfig(x11)
 BuildRequires:	pkgconfig(shared-mime-info)
+BuildRequires:	pkgconfig(gi-docgen)
+# For rst2man
+BuildRequires:	python3dist(docutils)
 %if %enable_tests
 BuildRequires:	x11-server-xvfb
 # gw tests will fail without this
