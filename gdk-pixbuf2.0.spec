@@ -25,11 +25,11 @@
 Summary:	Image loading and manipulation library for GTK+
 Name:		%{pkgname}%{api}
 Version:	2.42.10
-Release:	4
+Release:	5
 License:	LGPLv2+
 Group:		System/Libraries
-Url:		http://www.gtk.org
-Source0:	http://ftp.gnome.org/pub/GNOME/sources/gdk-pixbuf/%(echo %{version} |cut -d. -f1-2)/%{pkgname}-%{version}.tar.xz
+Url:		https://www.gtk.org
+Source0:	https://ftp.gnome.org/pub/GNOME/sources/gdk-pixbuf/%(echo %{version} |cut -d. -f1-2)/%{pkgname}-%{version}.tar.xz
 BuildRequires:	meson
 BuildRequires:	gettext-devel
 BuildRequires:	pkgconfig(jasper)
