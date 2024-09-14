@@ -177,6 +177,7 @@ touch %{buildroot}%{_libdir}/%{pkgname}-%{api}/%{binver}/loaders.cache
 
 (cd %{buildroot}%{_bindir}
  mv gdk-pixbuf-query-loaders gdk-pixbuf-query-loaders-%{__isa_bits}
+ ln -s gdk-pixbuf-query-loaders-%{__isa_bits} gdk-pixbuf-query-loaders
 )
 
 %find_lang %{pkgname}
@@ -206,6 +207,7 @@ fi
 
 %files -n %{libname}
 %{_bindir}/gdk-pixbuf-query-loaders-%{__isa_bits}
+%{_bindir}/gdk-pixbuf-query-loaders
 %{_libdir}/libgdk_pixbuf-%{api}.so.%{major}*
 %dir %{_libdir}/%{pkgname}-%{api}/%{binver}/loaders
 %{_libdir}/%{pkgname}-%{api}/%{binver}/loaders/*.so
