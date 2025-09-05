@@ -141,6 +141,7 @@ that uses GTK+ image loading/manipulation library.
 	-Ddocumentation=false \
 	-Dman=false \
 	-Dinstalled_tests=false \
+ 	-Dandroid=disabled \
 	-Dothers=enabled
 %endif
 
@@ -154,6 +155,7 @@ export CFLAGS=$(echo %{optflags} | sed -e 's/-fomit-frame-pointer//g')
 	-Dman=true \
 %endif
 	-Dinstalled_tests=false \
+ 	-Dandroid=disabled \
 	-Dothers=enabled
 %build
 %if %{with compat32}
