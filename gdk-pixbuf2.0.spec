@@ -138,7 +138,7 @@ that uses GTK+ image loading/manipulation library.
 %meson32 \
 	-Dbuiltin_loaders=png \
 	-Dintrospection=disabled \
-	-Ddocs=false \
+	-Ddocumentation=false \
 	-Dman=false \
 	-Dinstalled_tests=false \
 	-Dothers=enabled
@@ -150,7 +150,7 @@ export CFLAGS=$(echo %{optflags} | sed -e 's/-fomit-frame-pointer//g')
 %meson \
 	-Dbuiltin_loaders=png \
 %if %{enable_gtkdoc}
-	-Ddocs=true \
+	-Ddocumentation=true \
 	-Dman=true \
 %endif
 	-Dinstalled_tests=false \
