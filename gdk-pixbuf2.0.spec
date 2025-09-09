@@ -24,7 +24,7 @@
 
 Summary:	Image loading and manipulation library for GTK+
 Name:		%{pkgname}%{api}
-Version:	2.43.5
+Version:	2.44.0
 Release:	1
 License:	LGPLv2+
 Group:		System/Libraries
@@ -142,6 +142,7 @@ that uses GTK+ image loading/manipulation library.
 	-Dman=false \
 	-Dinstalled_tests=false \
  	-Dandroid=disabled \
+  	-Dglycin=disabled \
 	-Dothers=enabled
 %endif
 
@@ -156,6 +157,7 @@ export CFLAGS=$(echo %{optflags} | sed -e 's/-fomit-frame-pointer//g')
 %endif
 	-Dinstalled_tests=false \
  	-Dandroid=disabled \
+  	-Dglycin=disabled \
 	-Dothers=enabled
 %build
 %if %{with compat32}
