@@ -151,6 +151,8 @@ that uses GTK+ image loading/manipulation library.
 export CFLAGS=$(echo %{optflags} | sed -e 's/-fomit-frame-pointer//g')
 
 %meson \
+export CC=gcc
+export CXX=g++
 	-Dbuiltin_loaders=glycin \
 %if %{enable_gtkdoc}
 	-Ddocumentation=true \
@@ -164,6 +166,8 @@ export CFLAGS=$(echo %{optflags} | sed -e 's/-fomit-frame-pointer//g')
 %if %{with compat32}
 %ninja_build -C build32 -j2
 %endif
+export CC=gcc
+export CXX=g++
 %meson_build -j2
 
 %if %enable_tests
