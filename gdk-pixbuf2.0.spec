@@ -161,7 +161,7 @@ export CFLAGS=$(echo %{optflags} | sed -e 's/-fomit-frame-pointer//g')
 	-Dinstalled_tests=false \
  	-Dandroid=disabled \
   	-Dglycin=enabled \
-	-Dtests-false \
+	-Dtests=false \
 	-Dothers=enabled
 %build
 %if %{with compat32}
