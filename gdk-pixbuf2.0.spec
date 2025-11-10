@@ -1,3 +1,5 @@
+%global optflags %{optflags} -Wno-unused-command-line-argument
+
 # Wine uses gdk-pixbuf
 %ifarch %{x86_64}
 %bcond_without compat32
@@ -161,8 +163,6 @@ export CFLAGS=$(echo %{optflags} | sed -e 's/-fomit-frame-pointer//g')
   	-Dglycin=enabled \
 	-Dothers=enabled
 %build
-export CC=gcc
-export CXX=g++
 %if %{with compat32}
 %ninja_build -C build32 -j2
 %endif
