@@ -25,7 +25,7 @@
 Summary:	Image loading and manipulation library for GTK+
 Name:		%{pkgname}%{api}
 Version:	2.44.4
-Release:	1
+Release:	2
 License:	LGPLv2+
 Group:		System/Libraries
 Url:		https://www.gtk.org
@@ -36,6 +36,7 @@ BuildRequires:	pkgconfig(jasper)
 BuildRequires:	pkgconfig(libjpeg)
 BuildRequires:	pkgconfig(libtiff-4)
 BuildRequires:	pkgconfig(glib-2.0)
+BuildRequires:	pkgconfig(glycin-2)
 BuildRequires:	pkgconfig(gobject-introspection-1.0)
 BuildRequires:  pkgconfig(libpcre2-8)
 BuildRequires:	pkgconfig(libpng)
@@ -150,14 +151,14 @@ that uses GTK+ image loading/manipulation library.
 export CFLAGS=$(echo %{optflags} | sed -e 's/-fomit-frame-pointer//g')
 
 %meson \
-	-Dbuiltin_loaders=png \
+	-Dbuiltin_loaders=glycin \
 %if %{enable_gtkdoc}
 	-Ddocumentation=true \
 	-Dman=true \
 %endif
 	-Dinstalled_tests=false \
  	-Dandroid=disabled \
-  	-Dglycin=disabled \
+  	-Dglycin=enabled \
 	-Dothers=enabled
 %build
 %if %{with compat32}
